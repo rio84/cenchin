@@ -1,0 +1,14 @@
+*/.idea
+.idea
+.idea/*
+openxsl/uploads
+logs
+logs/*
+node_modules
+node_modules/*
+*.log
+test/*
+.DS_Store
+npm-debug.log
+temp/*
+!temp/README.md
