@@ -1,0 +1,14 @@
+{
+  "name": "senking.tech",
+  "version": "1.0.0",
+  "description": "s",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "ali-oss":"4.6.2",
+    "request":""
+  }
+}
