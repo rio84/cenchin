@@ -95,7 +95,10 @@ spawn('git tag',{
         var vers=data.toString().split('\n');
         var lastVer='0.0.0';
         for(var i=0;i<vers.length;i++){
-            lastVer=maxVer(vers[i].replace(tagPrefix,''),lastVer);
+            if(vers[i].startsWith(tagPrefix)){
+                lastVer=maxVer(vers[i].replace(tagPrefix,''),lastVer);
+            }
+
         }
         var verSplt=lastVer.split('.');
 
