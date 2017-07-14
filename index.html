@@ -1,210 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="dns-prefetch" href="http://i.oxm1.cc"/>
     <meta charset="UTF-8">
-    <title>Senking.tech</title>
-    <style>
-        body {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            background-color: #34495e;
-        }
+    <meta name="keywords" content="声罄,声罄科技"/>
+    <meta name="description" content="杭州声罄科技有限公司,让互联网技术不是进入互联网的门槛"/>
+    <link rel="shortcut icon" href="http://i.oxm1.cc/uploads/git/wurui/img/2aeew1jrqTj4xh01y2R0yu6A3ta-1000.png"
+          type="image/x-icon"/>
+    <title>声罄科技</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
 
-        .content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: 160px;
-            overflow: hidden;
-            font-family: 'Lato', sans-serif;
-            font-size: 35px;
-            line-height: 40px;
-            color: #ecf0f1;
-        }
-        .content__container {
-            font-weight: 600;
-            overflow: hidden;
-            height: 40px;
-            padding: 0 40px;
-        }
-        .content__container:before {
-            content: '[';
-            left: 0;
-        }
-        .content__container:after {
-            content: ']';
-            position: absolute;
-            right: 0;
-        }
-        .content__container:after, .content__container:before {
-            position: absolute;
-            top: 0;
-            color: #16a085;
-            font-size: 42px;
-            line-height: 40px;
-            -webkit-animation-name: opacity;
-            -webkit-animation-duration: 5s;
-            -webkit-animation-iteration-count: infinite;
-            animation-name: opacity;
-            animation-duration: 5s;
-            animation-iteration-count: infinite;
-        }
-        .content__container__text {
-            display: inline;
-            float: left;
-            margin: 0;
-        }
-        .content__container__list {
-            margin-top: 0;
-            padding-left: 20px;
-            text-align: left;
-            list-style: none;
-            -webkit-animation-name: change;
-            -webkit-animation-duration: 10s;
-            -webkit-animation-iteration-count: infinite;
-            animation-name: change;
-            animation-duration: 10s;
-            animation-iteration-count: infinite;
-        }
-        .content__container__list__item {
-            line-height: 40px;
-            margin: 0;
-        }
-
-        @-webkit-keyframes opacity {
-            0%, 100% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-        @-webkit-keyframes change {
-            0%, 12.66%, 100% {
-                transform: translate3d(0, 0, 0);
-            }
-            16.66%, 29.32% {
-                transform: translate3d(0, -25%, 0);
-            }
-            33.32%,45.98% {
-                transform: translate3d(0, -50%, 0);
-            }
-            49.98%,62.64% {
-                transform: translate3d(0, -75%, 0);
-            }
-            66.64%,79.3% {
-                transform: translate3d(0, -50%, 0);
-            }
-            83.3%,95.96% {
-                transform: translate3d(0, -25%, 0);
-            }
-        }
-        @-o-keyframes opacity {
-            0%, 100% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-        @-o-keyframes change {
-            0%, 12.66%, 100% {
-                transform: translate3d(0, 0, 0);
-            }
-            16.66%, 29.32% {
-                transform: translate3d(0, -25%, 0);
-            }
-            33.32%,45.98% {
-                transform: translate3d(0, -50%, 0);
-            }
-            49.98%,62.64% {
-                transform: translate3d(0, -75%, 0);
-            }
-            66.64%,79.3% {
-                transform: translate3d(0, -50%, 0);
-            }
-            83.3%,95.96% {
-                transform: translate3d(0, -25%, 0);
-            }
-        }
-        @-moz-keyframes opacity {
-            0%, 100% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-        @-moz-keyframes change {
-            0%, 12.66%, 100% {
-                transform: translate3d(0, 0, 0);
-            }
-            16.66%, 29.32% {
-                transform: translate3d(0, -25%, 0);
-            }
-            33.32%,45.98% {
-                transform: translate3d(0, -50%, 0);
-            }
-            49.98%,62.64% {
-                transform: translate3d(0, -75%, 0);
-            }
-            66.64%,79.3% {
-                transform: translate3d(0, -50%, 0);
-            }
-            83.3%,95.96% {
-                transform: translate3d(0, -25%, 0);
-            }
-        }
-        @keyframes opacity {
-            0%, 100% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-        @keyframes change {
-            0%, 12.66%, 100% {
-                transform: translate3d(0, 0, 0);
-            }
-            16.66%, 29.32% {
-                transform: translate3d(0, -25%, 0);
-            }
-            33.32%,45.98% {
-                transform: translate3d(0, -50%, 0);
-            }
-            49.98%,62.64% {
-                transform: translate3d(0, -75%, 0);
-            }
-            66.64%,79.3% {
-                transform: translate3d(0, -50%, 0);
-            }
-            83.3%,95.96% {
-                transform: translate3d(0, -25%, 0);
-            }
-        }
-
-    </style>
 </head>
 <body>
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<div class="fillparent">
+    <a name="home"></a>
+    <nav>
+        <div class="nav-right">
+            <span>
+                <a href="#home">首页</a>
+            </span>
+            <span>
+                <a href="#about">关于我们</a>
+            </span>
+            <span>
+                <a href="#product">服务和产品</a>
+            </span>
+            <span>
+                <a href="#contact">联系方式</a>
+            </span>
+            <span>
+                <a href="#recruit">诚聘英才</a>
+            </span>
+        </div><!--
+        <strong class="nav-left">声罄科技</strong>-->
 
-<div class="content">
-    <div class="content__container">
-        <!--
-        <p class="content__container__text">
+        <img class="logo" title="声罄科技" height="46" src="http://i.oxm1.cc/uploads/git/wurui/img/2aeewukk5Tj4xg715nRuvjzA7bk-294.png"/>
 
-        </p>-->
+    </nav>
+    <section class="mainpic">
+        <img src="http://i.oxm1.cc/uploads/git/wurui/img/2aeew1jrqTj4xh01y2R0yu6A3ta-1000.png"/>
 
-        <ul class="content__container__list">
-            <li class="content__container__list__item">Hello world !</li>
-            <li class="content__container__list__item">你好世界!</li>
-            <li class="content__container__list__item">こんにちは世界!</li>
-            <li class="content__container__list__item">bonjour, monde!</li>
-        </ul>
-    </div>
+        <h1>创新产品改变世界</h1>
+        <h4>
+            助力更多人进入移动互联网,让技术不是门槛。
+        </h4>
+    </section>
+    <a name="about"></a>
+    <section>
+        <div class="about">
+            <h1>我们是谁?</h1>
+            <h4>
+                我们是一群追逐梦想的年轻人!我们积极响应国家提出的大众创业,万众创新的口号,致力将自己的专长投入到创新之路。
+                我们的主要成员来自于国内互联网巨头,在互联网行业有着丰富的产品研发经验。还有来自于硬件制造行业及传统销售行业。
+            </h4>
+            <br/><br/>
+
+            <h1>我们的理念</h1>
+            <h4>
+                科技以人为本,互联网技术造福社会。
+            </h4>
+        </div>
+    </section>
+    <a name="product"></a>
+    <section class="service">
+        <div class="wrapper">
+            <br/><br/>
+            <h1 class="sec-title">我们的服务</h1>
+            <hr/>
+            <table class="product-table" width="100%" cellpadding="0" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td>
+                        <i class="iconfont bigfont">&#xe634;</i>
+                        <h1>需求咨询</h1>
+                        <h4>
+                            需求分析比盲目开发更重要
+                            <br/>
+                            通过数据深度挖掘可行性
+                        </h4>
+                    </td>
+                    <td>
+                        <i class="iconfont bigfont">&#xe602;</i>
+                        <br/>
+                        <h1>技术支持</h1>
+                        <h4>
+                            网站诊断,数据分析
+                            <br/>
+                            业务规划
+                        </h4>
+                    </td>
+                    <td>
+                        <i class="iconfont bigfont">&#xe603;</i>
+                        <br/>
+                        <h1>网站建设</h1>
+                        <h4>
+                            移动站点建设<br/>
+                            公众号建设,功能扩充
+                        </h4>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br/><br/><br/>
+        </div>
+    </section>
+    <section class="product">
+        <div class="wrapper">
+            <br/><br/>
+            <h1 class="sec-title">主要产品</h1>
+            <hr/>
+            <table class="product-table" width="100%" cellpadding="0" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td>
+                        <img width="150" src="http://i.oxm1.cc/uploads/git/wurui/img/2ae94byxiTj538pmsaR7aq8A175h-1000.jpg"/>
+                        <br/>
+                        OpenXSL
+                    </td>
+                    <td>
+                        <img width="150"  src="http://i.oxm1.cc/uploads/git/wurui/img/2ae943iaiTj538y3faRi91eA8hwx-998.png"/>
+                        <br/>
+                        扫码车贴
+                    </td>
+                    <td>
+                        <img width="150" src="http://i.oxm1.cc/uploads/git/wurui/img/2ajyf6sgqTizdxut92R8wu6E1fn0.jpg"/>
+                        <br/>
+                        美股统计
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br/><br/><br/>
+        </div>
+    </section>
+    <a name="contact"></a>
+    <section class="contact">
+        <div class="wrapper">
+            <br/><br/>
+            <h1 class="sec-title">联系我们</h1>
+            <hr/>
+            <table class="product-table" width="100%" cellpadding="0" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td>
+                        <br/><br/>
+                        <i class="iconfont bigfont">&#xe604;</i>
+                        <br/>
+                        <a href="mailto:rio@senking.tech">rio@senking.tech</a>
+                    </td>
+                    <td>
+                        <br/><br/>
+                        <i class="iconfont bigfont">&#xe609;</i>
+                        <br/>
+                        0571-88587016
+                    </td>
+
+                    <td>
+                        微信公众号<br/>
+                        <img style="margin-bottom: -100px;" src="img/firm_qrcode_1.png" width="140"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br/><br/><br/>
+        </div>
+    </section>
+    <a name="recruit"></a>
+    <section class="recruit">
+        <br/><br/>
+        <div class="wrapper">
+            <h1 class="sec-title">诚聘英才</h1>
+            <hr/>
+            <div class="text">
+                本公司为创业起步阶段,欢迎各类技术研发、产品设计、推广营销等人才加入我们。无论是行业资深人士或在校学生,都可以有相应的岗位。
+                原则上均可远程办公,兼职办公,时间自由。
+                <br/>
+                如有意向可发送简历至 <a href="mailto:hr@senking.tech">hr@senking.tech</a>
+            </div>
+        </div>
+        <br/><br/><br/><br/>
+    </section>
+    <footer>
+        Copyright © 2017 Senking.tech. 杭州声罄科技有限公司
+    </footer>
 </div>
 
 </body>

@@ -39,7 +39,7 @@ var maxVer=function(v1,v2){
 var uploadTar=function(){
 
     jsonConf.version=version;
-    var r = request.post({url:'http://autopub.momofox.com/uploadtar',headers:{
+    var r = request.post({url:'http://121.41.24.28:11100/uploadtar',headers:{
         "User-Agent": 'autopub',
         vcode:"201701031713"
     }}, function(err, httpResponse, body) {
