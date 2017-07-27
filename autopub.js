@@ -39,7 +39,8 @@ var maxVer=function(v1,v2){
 var uploadTar=function(){
 
     jsonConf.version=version;
-    var r = request.post({url:'http://121.41.24.28:11100/uploadtar',headers:{
+    var server_host=jsonConf.server_host||'120.26.223.237'
+    var r = request.post({url:'http://'+server_host+':11100/uploadtar',headers:{
         "User-Agent": 'autopub',
         vcode:"201701031713"
     }}, function(err, httpResponse, body) {
@@ -95,10 +96,9 @@ spawn('git tag',{
         var vers=data.toString().split('\n');
         var lastVer='0.0.0';
         for(var i=0;i<vers.length;i++){
-            if(vers[i].startsWith(tagPrefix)){
-                lastVer=maxVer(vers[i].replace(tagPrefix,''),lastVer);
+            if(vers[i]) {
+                lastVer = maxVer(vers[i].replace(tagPrefix, ''), lastVer);
             }
-
         }
         var verSplt=lastVer.split('.');
 
