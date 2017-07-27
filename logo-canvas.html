@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="dns-prefetch" href="http://i.oxm1.cc"/>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="声罄,声罄科技"/>
+    <meta name="description" content="杭州声罄科技有限公司,让互联网技术不是进入互联网的门槛"/>
+    <link rel="shortcut icon" href="http://i.oxm1.cc/uploads/git/wurui/img/2aeew1jrqTj4xh01y2R0yu6A3ta-1000.png"
+          type="image/x-icon"/>
+    <title>Cenchin Logo</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
+
+</head>
+<body>
+<style>
+    div {
+        position: relative;
+    }
+
+    div > svg {
+        position: absolute;
+        background-color: #fff;
+    }
+
+</style>
+<canvas id="single" width="100" height="100"></canvas>
+<canvas id="logo" width="500" height="500"></canvas>
+<script>
+    var canvas = document.querySelector('#single'),
+            ctx = canvas.getContext('2d');
+    ctx.globalAlpha=0.5;
+    ctx.beginPath();
+    ctx.arc(50,50,33,0,2*Math.PI);
+    ctx.lineWidth=34;
+    ctx.strokeStyle='#0c9'
+
+    ctx.stroke();
+   // ctx.save();
+
+    ctx.beginPath();
+    ctx.moveTo(50,50);
+    ctx.lineTo(100,50);
+    ctx.lineWidth=4;
+    ctx.strokeStyle='#f00'
+
+    ctx.stroke();
+    ctx.closePath();
+
+    function drawC(){
+
+    }
+
+</script>
+<script>
+    /*
+    var canvas = document.querySelector('canvas'),
+            div = document.querySelector('div');
+    var rows =7 , r_mid = Math.floor(rows / 2);
+    var getDistance=function(index,mid){
+        var dis=index-mid;
+
+        return (50 - 2* dis * dis)*dis
+    };
+    var getOpacity=function(index,mid){
+        var dis=index-mid;
+
+        return 1- Math.abs(dis)/rows
+    };
+    for (var i = 0; i < rows; i++) {
+        var idx = r_mid - Math.abs(i - r_mid);
+        var cols = 2 * idx + 1;
+        var c_mid = Math.floor(cols / 2);
+
+        var fucktop = (500 - 100) / 2 + getDistance(i,r_mid);
+        var opacity=getOpacity(i,r_mid);
+
+
+        for (var j = 0; j < cols; j++) {
+            var newsvg = svg.cloneNode(true);
+            var deltaX = (j - c_mid) * 50,
+                    left = (500 - 100) / 2 + getDistance(j,c_mid);
+            newsvg.style.zIndex = (idx + 1) * 10 - Math.abs(j - c_mid);
+            newsvg.style.left = left + 'px';
+            newsvg.style.top = fucktop + 'px'
+            newsvg.getElementsByTagName('circle')[0].style.opacity=Math.min(opacity,getOpacity(j,c_mid))
+            div.appendChild(newsvg);
+            if(i==0 || i==rows-1 || j==0||j==cols-1){
+                newsvg.style.backgroundColor='transparent'
+            }
+        }
+
+    }
+    */
+
+</script>
+</body>
+</html>
