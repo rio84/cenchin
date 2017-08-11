@@ -2,6 +2,5 @@
   "name":"cenchin",
   "owner":"rio84",
   "static":true,
-  "deployDir":"/home/localhost",
-  "server_host":"121.41.24.28"
+  "deployDir":"/home/localhost"
 }
