@@ -39,7 +39,7 @@ var maxVer=function(v1,v2){
 var uploadTar=function(){
 
     jsonConf.version=version;
-    var server_host=jsonConf.server_host||'120.26.223.237'
+    var server_host=jsonConf.server_host||'118.178.253.89'
     var r = request.post({url:'http://'+server_host+':11100/uploadtar',headers:{
         "User-Agent": 'autopub',
         vcode:"201701031713"
