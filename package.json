@@ -8,7 +8,6 @@
 
   },
   "devDependencies": {
-    "ali-oss":"4.6.2",
-    "request":""
+    "tar":""
   }
 }

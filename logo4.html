@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="dns-prefetch" href="http://i.oxm1.cc"/>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="声罄,声罄科技"/>
+    <meta name="description" content="杭州声罄科技有限公司,让互联网技术不是进入互联网的门槛"/>
+    
+    <title>2022.2没有白底的</title>
+    
+
+</head>
+<body>
+<style>
+    body{background-color: #000;}
+
+    svg {
+        position: relative;
+    }
+
+    svg > circle {
+        position: absolute;
+        
+
+    }
+
+</style>
+<div style="width:200px;height:10px;background-color: red;"></div>
+<svg width="1000" height="1000" version="1.1"
+     xmlns="http://www.w3.org/2000/svg" style="width:1000px;height:1000px;" id="logo">
+        
+         <defs><!-- 定义 -->
+        <clipPath id="clipPath"><!-- 定义剪裁路径 -->
+            <polygon points="0,0 200,0 200,90 100,90 100,110 200,110 200,200 0,200"/>
+        </clipPath>
+        <clipPath id="clipPath2"><rect width="200" height="200" x="0" y="0"></rect></clipPath>
+        
+        <circle id="cc" cx="100" cy="100" r="66" stroke="#09c" fill="transparent"
+            stroke-width="68" clip-path="url(#clipPath)"/>
+
+        
+    </defs>
+    
+    <use href="#cc" y="0" x="0" clip-path="url(#clipPath2)"/>
+     </svg>
+
+
+<script>
+
+    var svg = document.querySelector('svg'),
+            div = document.querySelector('#logo'),
+            item=document.querySelector('use'),
+            rectMask=document.querySelector('rect');
+    var rows =7 , r_mid = Math.floor(rows / 2);
+    var getDistance=function(index,mid){
+        var dis=index-mid;
+
+        return (50 - 2* dis * dis)*dis
+    };
+    var getOpacity=function(index,mid){
+        var dis=index-mid;
+        return 1- Math.abs(dis)/rows
+    };
+    var getClipPath=function(rIndex,cIndex,mid){
+        var clipPath2 = document.getElementById('clipPath2');
+            clipPath2Clone=clipPath2.cloneNode(true),
+            id='cp-'+rIndex+'-'+cIndex;
+
+        clipPath2Clone.setAttribute('id',id)
+
+        var rect=200;
+        var 
+            leftOffset = (mid - cIndex),
+            topOffset = (r_mid -  rIndex),
+            deltaX=0,
+            deltaY=0;
+
+
+        if(leftOffset==0){
+
+        }else {
+            deltaX  =  getDistance(cIndex + Math.abs(leftOffset)/leftOffset,mid) - getDistance(cIndex,mid)
+        }
+
+        if(topOffset==0){
+
+        }else {
+            deltaY  =  getDistance(rIndex + Math.abs(topOffset)/topOffset,r_mid) - getDistance(rIndex,r_mid)
+        }
+        //console.log(deltaX,deltaY);
+        var rectNode=clipPath2Clone.firstElementChild;
+        rectNode.setAttribute('width', deltaX>0 ? deltaX :(rect + deltaX))
+        rectNode.setAttribute('height', deltaY>0 ? deltaY :(rect + deltaY));
+        rectNode.setAttribute('x',deltaX>=0 ? 0 :(rect + deltaX));
+        rectNode.setAttribute('y',deltaY>=0 ? 0 :(rect + deltaY));
+        clipPath2.parentNode.appendChild(clipPath2Clone)
+        
+        return "url(#"+id+")"
+        //return `polygon(0 0, 80 0, 80 60 ,0 60)`
+    };
+    var MARGIN=300;
+    var items=[];
+    for (var i = 0; i < rows; i++) {
+        var idx = r_mid - Math.abs(i - r_mid);
+        var cols = 2 * idx + 1;
+        var c_mid = Math.floor(cols / 2);
+
+        var fucktop = MARGIN + getDistance(i,r_mid);
+        var opacity=getOpacity(i,r_mid);
+
+
+        for (var j = 0; j < cols; j++) {
+            var newsvg = item.cloneNode(true);
+            
+            var deltaX = (j - c_mid) * 50,
+                    left = MARGIN + getDistance(j,c_mid);
+            //newsvg.style.zIndex = (idx + 1) * 10 - Math.abs(j - c_mid);
+            //newsvg.x=left;
+            newsvg.setAttribute('x',left);
+            newsvg.setAttribute('y',fucktop);//
+            //newsvg.setAttribute('z', (idx + 1) * 10 - Math.abs(j - c_mid));
+            var zIndex=(idx + 1) * 10 - Math.abs(j - c_mid)
+            //newsvg.style.left = left + 'px';
+            //newsvg.style.top = fucktop + 'px'
+            //newsvg.getElementsByTagName('circle')[0]
+            newsvg.setAttribute('opacity',Math.min(opacity,getOpacity(j,c_mid)));
+            //newsvg.opacity=Math.min(opacity,getOpacity(j,c_mid))
+            //div.appendChild(newsvg);
+
+            newsvg.setAttribute('clip-path',getClipPath(i,j,c_mid))
+
+            items.push({
+                el:newsvg,
+                zIndex:zIndex
+            })
+            
+            
+            if(i==0 || i==rows-1 || j==0||j==cols-1){
+                
+                //newsvg.fill='transparent'
+            }else{
+                /*
+                var rect=rectMask.cloneNode(true);
+                //div.appendChild(rect);
+                
+                
+                rect.setAttribute('x',left);
+                rect.setAttribute('y',fucktop);//
+                //rect.setAttribute('z', (idx + 1) * 10 - Math.abs(j - c_mid)-1);
+                items.push({
+                    el:rect,
+                    zIndex:zIndex - 0.1
+                })
+                */
+            }
+            div.appendChild(newsvg);
+
+        }
+        //if(i==0)break;
+
+    }
+    /*
+    items.sort(function(a,b){
+        return a.zIndex>b.zIndex?1:-1
+    });
+    for(var i=0;i<items.length;i++){
+        div.appendChild(items[i].el);
+    }*/
+
+</script>
+</body>
+</html>

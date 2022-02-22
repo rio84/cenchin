@@ -1,151 +1,192 @@
 /**
- * Created by wurui on 29/12/2016.
+ * Created by wurui on 2019.7.21
+ 为了压缩代码，重新写了部署的方法
  */
 //git archive --output "../oxst.tar" master
-var child_process=require('child_process');
-var jsonConf=require('./autopub.json');
+const AUTH_CODE='kqbusdtl0.7iu41dlp0p7';
 
-var fs=require('fs');
-var request=require('request');
+const child_process=require('child_process');
 
-var version='0.0.0';
-var owner=jsonConf.owner;
-var projectName=jsonConf.name;
-var tarName=projectName+'_'+Math.random().toString().substr(2,6)+'.tar';
-var tempPath='../'+tarName;
 
-var startTS=Date.now();
+const tar = require("tar");
+const fs=require('fs');
+const path=require('path');
+const http=require('http');
 
-var flag=process.argv[2];
-var tagPrefix='rls/';
+const jsonConf=require('./autopub.json');
+const version=jsonConf.version;//'0.0.0';
+const projectName=jsonConf.name;
+const startTS=Date.now();
+const logger=function(){
 
-var useLastTag=false;
+    var args=[].slice.call(arguments,0);
+    args.unshift('['+((Date.now()-startTS)/1000).toFixed(3)+']');
+    console.log.apply(console,args)
+};
 
-var maxVer=function(v1,v2){
-    var splt1=v1.split('.'),
-        splt2=v2.split('.'),
-        i=0;
-    while(i<3){
-        var delta=splt1[i]-splt2[i];
-        if(delta){
-            return delta>0?v1:v2;
-        }
-        i++;
+const tempPath=path.join(__dirname,'../'+'_delopy_'+projectName+'_'+startTS);
+
+const flag=process.argv[2];
+const useLastTag=false;
+logger('>>>>>StartTime',(new Date).toLocaleString(),'tempPath Dir='+tempPath)
+fs.mkdirSync(tempPath);
+
+const getCurrentVersion=function(){
+    var lastVer=version;
+   
+    var verSplt=lastVer.split('.');
+
+    switch (flag){
+        case 't':
+            verSplt[0]-= -1;
+            verSplt[1]= 0;
+            verSplt[2]= 0;
+            break
+        case 'm':
+            verSplt[1]-= -1
+            verSplt[2]= 0;
+            break
+        case 'n':
+            //use last tag
+            
+            break
+        default:
+            verSplt[2]-= -1
+            break;
     }
-    return v1;
+    
+    return verSplt.join('.');
 };
-//jsonConf.deployDir='/Users/wurui/localhost/lab';
 
-var uploadTar=function(){
-
-    jsonConf.version=version;
-    var server_host=jsonConf.server_host||'118.178.253.89'
-    var r = request.post({url:'http://'+server_host+':11100/uploadtar',headers:{
-        "User-Agent": 'autopub',
-        vcode:"201701031713"
-    }}, function(err, httpResponse, body) {
-        if(httpResponse && httpResponse.statusCode==200) {
-            console.log('uploaded', body)
-        }else{
-            console.warn('uploaded error',httpResponse && httpResponse.statusCode,body);
-            if(!useLastTag) {
-                spawn('git tag -d ' + tagPrefix + version, function () {
-                    console.log('tag', tagPrefix + version, 'deleted')
-                });
+const checkAndCreateDir=(filename)=>{
+    var split=filename.split('/');
+    var i=1;
+    
+    
+    while(i<split.length){
+        
+        var dirpath='/'+split.slice(0,i++).join('/')//slice保证了排除掉了最后一个文件名
+        
+        try{
+            var stat=fs.statSync(dirpath)
+            if(stat && stat.isDirectory()){
+                
+            }else{
+                //logger('not'+dirpath)
             }
+        }catch(e){
+            //logger('not'+dirpath)
+            fs.mkdirSync(dirpath);
+            //logger('not'+dirpath)
         }
-        fs.unlinkSync(tempPath);
-    })
-    var form = r.form();
-    form.append('json', JSON.stringify(jsonConf));
-    form.append('file', fs.createReadStream(tempPath), {filename: tarName});
-
+    }
 };
-var spawn=function(cmdstr,callbacks){
-    var splt=cmdstr.split(' '),
-        main=splt.shift();
-    if(typeof callbacks=='function'){
-        callbacks={close:callbacks}
-    };
-    callbacks=Object.assign({
-        close:function(){},
-        error:function(err){
-            console.error(err)
-        },
-        stdout:function(data){
-            console.log('stdout: ' + data);
-        },
-        stderr: function (data) {
-            console.log('stderr: ' + data);
-        }
-    },callbacks)
-    var cmd=child_process.spawn(main,splt, {
-        cwd: '.'
-    }).on('close', callbacks.close).on('error',callbacks.error);
+const version_no=getCurrentVersion();
+jsonConf.version=version_no;
+fs.writeFileSync('./autopub.json',JSON.stringify(jsonConf,2,2))
+logger('NEW_VERSION',version_no)
 
-    cmd.stdout.on('data', callbacks.stdout);
-
-    cmd.stderr.on('data',callbacks.stderr);
-};
-
-
-
-spawn('git tag',{
-    stdout:function(data){
-
-        var vers=data.toString().split('\n');
-        var lastVer='0.0.0';
-        for(var i=0;i<vers.length;i++){
-            if(vers[i]) {
-                lastVer = maxVer(vers[i].replace(tagPrefix, ''), lastVer);
-            }
-        }
-        var verSplt=lastVer.split('.');
-
-        switch (flag){
-            case 't':
-                verSplt[0]-= -1;
-                verSplt[1]= 0;
-                verSplt[2]= 0;
-                break
-            case 'm':
-                verSplt[1]-= -1
-                verSplt[2]= 0;
-                break
-            case 'n':
-                //use last tag
-                useLastTag=true;
-                break
-            default:
-                verSplt[2]-= -1
-                break;
-        }
-        var newVar=verSplt.join('.');
-        version=newVar;
-
-        var archive=function(){
-
-            spawn('git archive --output '+tempPath+' --prefix='+projectName+'/ '+tagPrefix+newVar,function(code){
-
-                console.log('archive done! code='+code,'cost:'+(Date.now()-startTS)+'ms');
-                if(code==0){
-                    console.log('uploading')
-                    uploadTar();
+const fileList='css,img,index.html,autopub.json'.split(',');
+var Tasks={
+    copy:async function(){
+        var exclude=/\.(less)$/;
+        var loopCopy=(filename)=>{
+            var stat = fs.lstatSync(filename);
+            if(stat.isDirectory()){
+                if(filename!='js'){//js 在下一步处理
+                    var files=fs.readdirSync(filename)
+                    files.forEach(x=>{
+                        if(!x.startsWith('.') && !exclude.test(x)){
+                            loopCopy(path.join(filename,x))
+                        }
+                        
+                    })
                 }
-            });
+            }else{
+                var newpath=path.join(tempPath,filename)
+                checkAndCreateDir(newpath)
+                fs.copyFileSync(path.join(__dirname,filename),newpath)
+                
+            };
 
         };
-        console.log('use version:',newVar);
-        if(useLastTag){
-            archive();
-        }else{
 
-            spawn('git tag '+tagPrefix+newVar,archive)
-            console.log('new tag created:', tagPrefix+newVar)
-        }
+        fileList.forEach(loopCopy)
+    }    
+};
 
+var doTask=async function(){
 
-
+    for(var k in Tasks){
+        logger('Task start',k)
+        await Tasks[k]()
+        logger('Task done',k)
     }
+};
+const tarName=tempPath+'/pack.tar';
+doTask().then(()=>{
+    logger('start tar')
+    
+    
+    tar.c(
+      {
+        //gzip: <true|gzip options>,
+        cwd:tempPath,
+        prefix:projectName,
+        file: tarName
+      },
+      fileList
+    ).then(_ => { 
+
+        return uploadTar();
+       
+        
+    })
+    
+}).catch((e)=>{
+    logger('error',e)
 });
 
+
+
+const uploadTar=function(){
+    logger('uploading')
+
+    var server_host=jsonConf.server_host||'118.178.253.89'
+    //server_host='localhost'
+    const req=http.request({
+        //protocol:'http',
+        hostname:server_host,
+        port:11100,
+        path:'/api/upload/deploy',
+        method:'post',
+        headers: {
+            "User-Agent": 'autopub',
+            "auth-code":AUTH_CODE
+        }
+    },(res)=>{
+        if(res.statusCode!=200){
+            logger('Error')
+        }else{
+            res.setEncoding('utf8');
+            var allData=''
+            res.on('data', (chunk) => {
+                allData+=chunk.toString()
+                //console.log(`BODY: ${chunk}`);
+            });
+            res.on('end', () => {
+                logger('upload done',allData);
+                child_process.spawnSync('rm',[ '-fr',tempPath]);
+                
+                
+                logger('All done!','cost:'+(Date.now()-startTS)+'ms');
+            });
+
+        }
+        
+
+    });
+    req.write(fs.readFileSync(tarName));
+    req.end();
+    
+};
